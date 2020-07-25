@@ -23,13 +23,18 @@ class Login extends Component {
     const { options } = this.props;
 
     return (
-      <div>
-        <h3 className='login-heading'>Pop Quiz</h3>
-        <h3>Sign in</h3>
+      <div class='center'>
+        <h1>Pop Quiz</h1>
         <select
           value={this.state.selectedOption}
           onChange={this.handleOnChange}
-        ></select>
+        >
+          {options.map((option) => (
+            <option key={option.value} id={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
         <br />
         <button className='login-btn' onClick={this.handleLogin}>
           Login
@@ -39,4 +44,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+function mapStateToProps({ users }) {
+  return {
+    options: Object.values(users).map((user) => {
+      return { value: user.id, label: user.name };
+    }),
+  };
+}
+
+export default connect(mapStateToProps)(Login);
