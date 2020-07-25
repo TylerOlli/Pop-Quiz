@@ -16,7 +16,22 @@ class App extends Component {
     return (
       <Router>
         <Fragment>
-          <Route path='/' component={Login} />
+          {this.props.authed === true ? (
+            <Fragment>
+              <Route path='/' component={Login} />
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Switch>
+                <Route
+                  path='/'
+                  authedUser={this.props.authedUser}
+                  exact
+                  component={Home}
+                />
+              </Switch>
+            </Fragment>
+          )}
         </Fragment>
       </Router>
     );
