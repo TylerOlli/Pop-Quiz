@@ -1,22 +1,17 @@
-import React from 'react';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import '../styles/App.css';
+import Home from '../components/Home';
+import Nav from '../components/Nav';
+import Login from '../components/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <h1>Pop Quiz</h1>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Nav />
+        <Home />
+        <Login />
       </header>
     </div>
   );
