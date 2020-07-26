@@ -22,14 +22,13 @@ class App extends Component {
             </Fragment>
           ) : (
             <Fragment>
-              <Switch>
-                <Route
-                  path='/'
-                  authedUser={this.props.authedUser}
-                  exact
-                  component={Home}
-                />
-              </Switch>
+              <Nav authedUser={this.props.authedUser} />
+              <Route
+                path='/'
+                authedUser={this.props.authedUser}
+                exact
+                component={Home}
+              />
             </Fragment>
           )}
         </Fragment>

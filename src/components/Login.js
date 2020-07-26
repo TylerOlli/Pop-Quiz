@@ -23,7 +23,7 @@ class Login extends Component {
     const { options } = this.props;
 
     return (
-      <div class='center'>
+      <div className='center'>
         <h1>Pop Quiz</h1>
         <select
           value={this.state.selectedOption}
@@ -35,8 +35,7 @@ class Login extends Component {
             </option>
           ))}
         </select>
-        <br />
-        <button className='login-btn' onClick={this.handleLogin}>
+        <button className='btn' onClick={this.handleLogin}>
           Login
         </button>
       </div>
