@@ -7,6 +7,8 @@ import Home from '../components/Home';
 import Nav from '../components/Nav';
 import Login from '../components/Login';
 import QuizDetails from '../components/QuizDetails';
+import QuizResults from '../components/QuizResults';
+import Leaderboard from '../components/Leaderboard';
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +33,8 @@ class App extends Component {
                 component={Home}
               />
               <Route path='/questions/:id' exact component={QuizDetails} />
+              <Route path='/results/:id' exact component={QuizResults} />
+              <Route path='/leaderboard' exact component={Leaderboard} />
             </Fragment>
           )}
         </Fragment>
