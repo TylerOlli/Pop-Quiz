@@ -6,6 +6,7 @@ import { handleInitialData } from '../actions/shared';
 import Home from '../components/Home';
 import Nav from '../components/Nav';
 import Login from '../components/Login';
+import QuizDetails from '../components/QuizDetails';
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class App extends Component {
                 exact
                 component={Home}
               />
+              <Route path='/questions/:id' exact component={QuizDetails} />
             </Fragment>
           )}
         </Fragment>
