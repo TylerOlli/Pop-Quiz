@@ -1,37 +1,43 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card } from 'semantic-ui-react';
+import { Card, Header, Feed } from 'semantic-ui-react';
 
 class Leaderboard extends Component {
   render() {
     const { leaders } = this.props;
     return (
-      <Fragment>
-        <h3>Leaderboard</h3>
+      <div className='leaderboard'>
+        <Header as='h2' textAlign='center'>
+          Leaderboard
+        </Header>
         <Card.Group>
           {leaders.map((user, index) => (
-            <div key={user.leaderId}>
-              <div className='user'>
-                <h4>{user.leaderName} asks:</h4>
-              </div>
-              <div>
-                <img
-                  className='avatar'
-                  alt={user.avatarURL}
-                  src={user.avatarURL}
-                />
-              </div>
-              <div>
+            <Card fluid color='teal' key={user.leaderId}>
+              <Card.Content extra>
+                <Feed>
+                  <Feed.Event>
+                    <Feed.Label>
+                      <img src={user.avatarURL} alt={user.name} />
+                    </Feed.Label>
+                    <Feed.Content>
+                      <Feed.Meta>
+                        <Feed.User>{user.name}</Feed.User>
+                      </Feed.Meta>
+                    </Feed.Content>
+                  </Feed.Event>
+                </Feed>
+              </Card.Content>
+              <Card.Content>
                 <b>Score: {user.score}</b>
                 <p>Answered Questions: {user.answered}</p>
                 <p>Created Questions: {user.questions}</p>
                 <br />
                 <p className='center'></p>
-              </div>
-            </div>
+              </Card.Content>
+            </Card>
           ))}
         </Card.Group>
-      </Fragment>
+      </div>
     );
   }
 }

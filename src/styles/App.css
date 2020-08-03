@@ -64,6 +64,7 @@ select {
   padding: 5px 20px;
   border: none;
   transition: all 250ms;
+  margin: 20px;
 }
 
 .btn:hover {
@@ -71,6 +72,15 @@ select {
   background-color: #3306d4;
 }
 
+.ui.card {
+  padding: 10px;
+}
+
 .ui.cards {
   justify-content: center;
+}
+
+.new-question,
+.leaderboard {
+  margin: 10px 30px;
 }
