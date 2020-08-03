@@ -70,3 +70,7 @@ select {
   cursor: pointer;
   background-color: #3306d4;
 }
+
+.ui.cards {
+  justify-content: center;
+}

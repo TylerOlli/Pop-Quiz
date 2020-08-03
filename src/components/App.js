@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import 'semantic-ui-css/semantic.min.css';
 import '../styles/App.css';
 import { handleInitialData } from '../actions/shared';
 import Home from '../components/Home';

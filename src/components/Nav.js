@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { handleSetAuthedUser } from '../actions/authedUser';
+import { Menu, Image, Icon } from 'semantic-ui-react';
 
 class Nav extends Component {
   handleLogout = (e) => {
@@ -13,25 +14,41 @@ class Nav extends Component {
     const { user } = this.props;
 
     return (
-      <div className='center'>
-        <NavLink
-          className='nav-item'
-          to='/'
-          exact
-          activeClassName='active-nav-item'
-        >
+      <Menu stackable>
+        <Menu.Item as={NavLink} to='/' exact activeClassName='active'>
+          <Icon name='home' />
           Home
-        </NavLink>
-        <div className='nav-user'>
-          <div>
-            <img className='avatar' alt={user.id} src={user.avatarURL} />
-            <span className='username'>{user.name}</span>
-            <button className='btn' onClick={this.handleLogout}>
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
+        </Menu.Item>
+        <Menu.Item as={NavLink} to='/leaderboard' activeClassName='active'>
+          <Icon name='dashboard' />
+          Leaderboard
+        </Menu.Item>
+        <Menu.Item as={NavLink} to='/add' activeClassName='active'>
+          <Icon name='plus circle' />
+          Add Question
+        </Menu.Item>
+        <Menu.Menu position='right'>
+          {user !== null && (
+            <Fragment>
+              <Menu.Item>
+                <Fragment>
+                  <Image src={user.avatarURL} size='mini' avatar circular />
+                  <span>{user.name}</span>
+                </Fragment>
+              </Menu.Item>
+              <Menu.Item
+                as={NavLink}
+                to='/'
+                activeClassName='active'
+                onClick={this.handleLogout}
+              >
+                <Icon name='sign out' />
+                Logout
+              </Menu.Item>
+            </Fragment>
+          )}
+        </Menu.Menu>
+      </Menu>
     );
   }
 }

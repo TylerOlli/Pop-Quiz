@@ -38,16 +38,12 @@ class QuizDetails extends Component {
     const { user, question } = this.props;
     return (
       <div className='center top-10'>
-        <div className='poll-card'>
-          <div className='poll-user'>
+        <div className='card'>
+          <div className='user'>
             <h4>{user.name} wants to know:</h4>
           </div>
           <div>
-            <img
-              className='poll-card-avatar'
-              alt={user.avatarURL}
-              src={user.avatarURL}
-            />
+            <img className='avatar' alt={user.avatarURL} src={user.avatarURL} />
           </div>
           <div>
             <b>Which one?</b>

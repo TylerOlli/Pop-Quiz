@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Line } from 'rc-progress';
 import { connect } from 'react-redux';
 
-// show poll results
 class QuizResults extends Component {
   render() {
     const { user, question, totalVotes, yourAnswer, isInvalid } = this.props;

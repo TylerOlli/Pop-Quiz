@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { handleAddQuestion } from '../actions/shared';
+import { Header, Form } from 'semantic-ui-react';
 
 class NewQuestion extends Component {
   state = {
@@ -8,15 +9,9 @@ class NewQuestion extends Component {
     optionTwo: '',
   };
 
-  handleOptionOne = (event) => {
+  handleChanges = (e, { name, value }) => {
     this.setState({
-      optionOne: event.target.value,
-    });
-  };
-
-  handleOptionTwo = (event) => {
-    this.setState({
-      optionTwo: event.target.value,
+      [name]: value,
     });
   };
 
@@ -29,34 +24,38 @@ class NewQuestion extends Component {
   };
 
   render() {
+    const { optionOne, optionTwo } = this.state;
+
     return (
-      <div className='center'>
-        <h3>Create New Quiz Question</h3>
-        <form>
-          <label>Which one?</label>
-          <br />
-          <input
-            value={this.state.optionOne}
-            type='text'
-            className='options'
-            onChange={this.handleOptionOne}
-            placeholder='Enter first option'
-          />
-          <br />
-          OR
-          <br />
-          <input
-            value={this.state.optionTwo}
-            type='text'
-            className='options'
-            onChange={this.handleOptionTwo}
-            placeholder='Enter second option'
-          />
-          <button type='submit' className='btn' onClick={this.handleSubmit}>
-            Submit
-          </button>
-        </form>
-      </div>
+      <Fragment>
+        <Header as='h2' textAlign='center'>
+          Which One?
+        </Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group unstackable widths={2}>
+            <Form.Input
+              label='Option One'
+              name='optionOne'
+              value={this.state.optionOne}
+              placeholder='Enter First Option'
+              onChange={this.handleChanges}
+            />
+            <Form.Input
+              label='Option Two'
+              name='optionTwo'
+              value={this.state.optionTwo}
+              placeholder='Enter Second Option'
+              onChange={this.handleChanges}
+            />
+          </Form.Group>
+          <Form.Group unstackable widths={1}>
+            <Form.Button
+              content='Add New Question'
+              disabled={optionOne === '' || optionTwo === ''}
+            />
+          </Form.Group>
+        </Form>
+      </Fragment>
     );
   }
 }
