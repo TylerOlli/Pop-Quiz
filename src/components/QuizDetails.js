@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { handleSaveAnswer } from '../actions/shared';
+import { Card, Header, Form, Feed, Button } from 'semantic-ui-react';
+import NotFound from '../components/NotFound';
 
 class QuizDetails extends Component {
   state = {
@@ -35,44 +37,65 @@ class QuizDetails extends Component {
   }
 
   render() {
-    const { user, question } = this.props;
+    const { user, question, isInvalid, authedUser } = this.props;
     return (
       <div className='center top-10'>
-        <div className='card'>
-          <div className='user'>
-            <h4>{user.name} wants to know:</h4>
-          </div>
-          <div>
-            <img className='avatar' alt={user.avatarURL} src={user.avatarURL} />
-          </div>
-          <div>
-            <b>Which one?</b>
-            <form>
-              <input
-                type='radio'
-                checked={this.state.option === 'optionOne'}
-                name='options'
-                value='optionOne'
-                onChange={this.handleChange}
-              />{' '}
-              {question.optionOne.text}
-              <br />
-              <input
-                type='radio'
-                checked={this.state.option === 'optionTwo'}
-                name='options'
-                value='optionTwo'
-                onChange={this.handleChange}
-              />{' '}
-              {question.optionTwo.text}
-            </form>
-          </div>
-          <Link to={`/results/${this.props.pollId}`}>
-            <button onClick={this.handleVote} className='btn'>
-              Submit
-            </button>
-          </Link>
-        </div>
+        {isInvalid === false ? (
+          <Card fluid color='teal'>
+            <Card.Description>
+              <Header as='h4' textAlign='center'>
+                {user.name} asks:
+              </Header>
+            </Card.Description>
+            <Card.Content className='center aligned'>
+              <Header as='h6' textAlign='center'>
+                Which one?
+              </Header>
+              <Button.Group>
+                <Button
+                  color='teal'
+                  onClick={this.handleChange}
+                  value='optionOne'
+                >
+                  {question.optionOne.text}
+                </Button>
+                <Button.Or />
+                <Button
+                  color='teal'
+                  onClick={this.handleChange}
+                  value='optionTwo'
+                >
+                  {question.optionTwo.text}
+                </Button>
+              </Button.Group>
+            </Card.Content>
+            <Card.Content>
+              <Link to={`/results/${this.props.pollId}`}>
+                <Form.Button fluid onClick={this.handleVote}>
+                  Submit
+                </Form.Button>
+              </Link>
+            </Card.Content>
+            <Card.Content extra>
+              <Feed>
+                <Feed.Event>
+                  <Feed.Label>
+                    <img src={user.avatarURL} alt={user.name} />
+                  </Feed.Label>
+                  <Feed.Content>
+                    <Feed.Meta>
+                      Posted by <Feed.User>{user.name}</Feed.User>
+                      {authedUser === user.id && <span> (You)</span>}
+                    </Feed.Meta>
+                  </Feed.Content>
+                </Feed.Event>
+              </Feed>
+            </Card.Content>
+          </Card>
+        ) : (
+          <NotFound />
+        )}
+        <br />
       </div>
     );
   }
@@ -80,8 +103,15 @@ class QuizDetails extends Component {
 
 function mapStateToProps({ questions, users, authedUser }, props) {
   const { id } = props.match.params;
-
   const question = questions[id];
+
+  if (typeof question === 'undefined') {
+    return {
+      isInvalid: true,
+      user: '',
+      question: '',
+    };
+  }
 
   const userAnswer = users[authedUser].answers[id];
 
@@ -91,6 +121,7 @@ function mapStateToProps({ questions, users, authedUser }, props) {
     user: users[question.author],
     authedUser,
     userAnswer,
+    isInvalid: false,
   };
 }
 

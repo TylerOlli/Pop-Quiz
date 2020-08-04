@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
 import '../styles/App.css';
@@ -11,6 +11,7 @@ import QuizDetails from '../components/QuizDetails';
 import QuizResults from '../components/QuizResults';
 import Leaderboard from '../components/Leaderboard';
 import NewQuestion from '../components/NewQuestion';
+import NotFound from '../components/NotFound';
 
 class App extends Component {
   componentDidMount() {
@@ -28,16 +29,31 @@ class App extends Component {
           ) : (
             <Fragment>
               <Nav authedUser={this.props.authedUser} />
-              <Route
-                path='/'
-                authedUser={this.props.authedUser}
-                exact
-                component={Home}
-              />
-              <Route path='/questions/:id' exact component={QuizDetails} />
-              <Route path='/results/:id' exact component={QuizResults} />
-              <Route path='/leaderboard' exact component={Leaderboard} />
-              <Route path='/add' exact component={NewQuestion} />
+              {this.props.authed === true ? (
+                <Fragment>
+                  <Route path='/' component={Login} />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Switch>
+                    <Route
+                      path='/'
+                      authedUser={this.props.authedUser}
+                      exact
+                      component={Home}
+                    />
+                    <Route
+                      path='/questions/:id'
+                      exact
+                      component={QuizDetails}
+                    />
+                    <Route path='/results/:id' exact component={QuizResults} />
+                    <Route path='/leaderboard' exact component={Leaderboard} />
+                    <Route path='/add' exact component={NewQuestion} />
+                    <Route component={NotFound} />
+                  </Switch>
+                </Fragment>
+              )}
             </Fragment>
           )}
         </Fragment>

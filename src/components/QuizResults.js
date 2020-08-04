@@ -1,57 +1,84 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Line } from 'rc-progress';
 import { connect } from 'react-redux';
+import { Card, Header, Feed } from 'semantic-ui-react';
+import NotFound from '../components/NotFound';
 
 class QuizResults extends Component {
   render() {
-    const { user, question, totalVotes, yourAnswer, isInvalid } = this.props;
+    const {
+      user,
+      question,
+      totalVotes,
+      yourAnswer,
+      authedUser,
+      isInvalid,
+    } = this.props;
     return (
-      <div className='center'>
+      <Fragment>
         {isInvalid === false ? (
-          <div>
-            <div className='user'>
-              <h4>Results by {user.name} </h4>
-            </div>
-            <div>
-              <img
-                className='avatar'
-                alt={user.avatarURL}
-                src={user.avatarURL}
-              />
-            </div>
-            <div>
-              <b>Which one?</b>
-              <div>
-                {question.optionOne.text}
-                {yourAnswer[0] === 'optionOne' ? (
-                  <span>(your choice)</span>
-                ) : null}
-                <Line
-                  percent={(question.optionOne.votes.length / totalVotes) * 100}
-                  strokeWidth='1'
-                  strokeColor='#4b0082'
-                />
-                ({`${question.optionOne.votes.length} / ${totalVotes} votes`})
-              </div>
-              <div>
-                {question.optionTwo.text}
-                {yourAnswer[0] === 'optionTwo' ? (
-                  <span>(your choice)</span>
-                ) : null}
-                <Line
-                  percent={(question.optionTwo.votes.length / totalVotes) * 100}
-                  strokeWidth='1'
-                  strokeColor='#4b0082'
-                />
-                ({`${question.optionTwo.votes.length} / ${totalVotes} votes`})
-              </div>
-            </div>
+          <div className='quiz-results'>
+            <Card fluid color='teal'>
+              <Card.Description>
+                <Header as='h4' textAlign='center'>
+                  Quiz Results
+                </Header>
+              </Card.Description>
+              <Card.Content>
+                <b>Which one?</b>
+                <div className='results'>
+                  {question.optionOne.text}
+                  {yourAnswer[0] === 'optionOne' ? (
+                    <span>(your choice)</span>
+                  ) : null}
+                  <Line
+                    percent={
+                      (question.optionOne.votes.length / totalVotes) * 100
+                    }
+                    strokeWidth='1'
+                    strokeColor='#4b0082'
+                  />
+                  ({`${question.optionOne.votes.length} / ${totalVotes} votes`})
+                </div>
+                <div className='results'>
+                  {question.optionTwo.text}
+                  {yourAnswer[0] === 'optionTwo' ? (
+                    <span>(your choice)</span>
+                  ) : null}
+                  <Line
+                    percent={
+                      (question.optionTwo.votes.length / totalVotes) * 100
+                    }
+                    strokeWidth='1'
+                    strokeColor='#4b0082'
+                  />
+                  ({`${question.optionTwo.votes.length} / ${totalVotes} votes`})
+                </div>
+              </Card.Content>
+              <Card.Content extra>
+                <Feed>
+                  <Feed.Event>
+                    <Feed.Label>
+                      <img src={user.avatarURL} alt={user.name} />
+                    </Feed.Label>
+                    <Feed.Content>
+                      <Feed.Meta>
+                        Posted by{' '}
+                        <Feed.User>
+                          {user.name}
+                          {authedUser === user.id && <span> (You)</span>}
+                        </Feed.User>
+                      </Feed.Meta>
+                    </Feed.Content>
+                  </Feed.Event>
+                </Feed>
+              </Card.Content>
+            </Card>
           </div>
         ) : (
-          <div>Test</div>
+          <NotFound />
         )}
-        <br />
-      </div>
+      </Fragment>
     );
   }
 }
@@ -73,6 +100,7 @@ function mapStateToProps({ questions, users, authedUser }, props) {
   const userAnswers = users[authedUser].answers;
   return {
     pollId: id,
+    authedUser,
     question,
     user: users[question.author],
     yourAnswer: Object.entries(userAnswers).filter((answer) => {

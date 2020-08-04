@@ -81,6 +81,7 @@ select {
 }
 
 .new-question,
-.leaderboard {
+.leaderboard,
+.quiz-results {
   margin: 10px 30px;
 }
