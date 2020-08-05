@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Line } from 'rc-progress';
 import { Card, Header, Feed } from 'semantic-ui-react';
 
 class QuizResultsList extends Component {
@@ -19,6 +20,11 @@ class QuizResultsList extends Component {
             {yourAnswer[0][1] === 'optionOne' ? (
               <span>(your choice)</span>
             ) : null}
+            <Line
+              percent={(question.optionOne.votes.length / totalVotes) * 100}
+              strokeWidth='1'
+              strokeColor='#4b0082'
+            />
             ({`${question.optionOne.votes.length} / ${totalVotes} votes`})
           </div>
           <div>
@@ -26,6 +32,11 @@ class QuizResultsList extends Component {
             {yourAnswer[0][1] === 'optionTwo' ? (
               <span>(your choice)</span>
             ) : null}
+            <Line
+              percent={(question.optionTwo.votes.length / totalVotes) * 100}
+              strokeWidth='1'
+              strokeColor='#4b0082'
+            />
             ({`${question.optionTwo.votes.length} / ${totalVotes} votes`})
           </div>
         </Card.Content>

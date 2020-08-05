@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Line } from 'rc-progress';
 import { connect } from 'react-redux';
+import { Line } from 'rc-progress';
 import { Card, Header, Feed } from 'semantic-ui-react';
 import NotFound from '../components/NotFound';
 
